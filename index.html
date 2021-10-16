@@ -44,7 +44,7 @@
 
       <div class="container">
         <br>
-        <table class="table mt-5">
+        <table class="table table-dark mt-5">
             <thead style="color: aliceblue;">
                 <tr>
                     <th>Total Cases</th>
@@ -58,17 +58,25 @@
             </tbody>
         </table>
         <br>
-        <table class="table mt-5">
+        <form id="myForm" style="display:inline-block;">
+          <input class="form-control" style="max-width: 500px; text-align: center;" type="text" id="country" placeholder="Country Name" required>
+          <br><input class="btn btn-primary" type="submit" value="Get Data">
+        </form>
+        <table class="table table-dark mt-5">
           <thead style="color: aliceblue;">
               <tr>
                   <th>Country</th>
                   <th>Total Cases</th>
-                  <th>Total Deaths</th>
-                  <th>Total Recovered</th>
+                  <th >Total Deaths</th>
+                  <th >Total Recovered</th>
               </tr>
           </thead>
           <tbody>
               <tr id ="data1" style="color: whitesmoke;">
+                <td id="cou">#</td>
+                <td id="confirmed">#</td>
+                  <td id="deaths">#</td>
+                  <td id="recovered">#</td>
               </tr>
           </tbody>
       </table>
@@ -106,28 +114,41 @@
     $(document).ready(function(){
       init()
       function init(){
-        var url="https://api.covid19api.com/summary"
+        var url="https://coronavirus-19-api.herokuapp.com/countries"
         var data=''
         $.get(url,function(data){
           data=`
-          <td>${data.Global.TotalConfirmed}</td>
-          <td>${data.Global.TotalDeaths}</td>
-          <td>${data.Global.TotalRecovered}</td>
+          <td>${data[0].cases}</td>
+          <td>${data[0].deaths}</td>
+          <td>${data[0].recovered}</td>
           `
           $("#data").html(data)
         })
-        var url1 ="https://coronavirus-19-api.herokuapp.com/countries"
-        var data1=''
-        $.get(url1,function(data1){
-          data1=`
-          <td>${data1.country}</td>
-          <td>${data1.todayCases}</td>
-          <td>${data1.todayDeaths}</td>
-          <td>${data1.recovered}</td>
-          `
-          $("#data1").html(data1)
-        })
       }
+    })
+    var myForm=document.getElementById('myForm')
+    myForm.addEventListener('submit',function(e){
+      e.preventDefault()
+
+      var country =document.getElementById('country').value
+      var url="https://api.covid19api.com/total/dayone/country/"+country
+      fetch(url)
+      .then((res)=>res.json())
+      .then((res)=>{
+        var length= res.length
+        var index=length-1;
+        var confirmed=document.getElementById('confirmed')
+        var recovered=document.getElementById('recovered')
+        var deaths=document.getElementById('deaths')
+        cou.innerHTML=''
+        confirmed.innerHTML=''
+        recovered.innerHTML=''
+        deaths.innerHTML=''
+        cou.append(res[index].Country)
+        confirmed.append(res[index].Confirmed)
+        recovered.append(res[index].Recovered)
+        deaths.append(res[index].Deaths)
+      })
     })
   </script>
 </body>
