@@ -67,16 +67,18 @@
               <tr>
                   <th>Country</th>
                   <th>Total Cases</th>
+                  <th >Total Active Cases</th>
                   <th >Total Deaths</th>
-                  <!-- <th >Total Recovered</th> -->
+                  
               </tr>
           </thead>
           <tbody>
               <tr id ="data1" style="color: whitesmoke;">
                 <td id="cou">#</td>
                 <td id="confirmed">#</td>
+                <td id="active">#</td>
                   <td id="deaths">#</td>
-                  <!-- <td id="recovered">#</td> -->
+                 
               </tr>
           </tbody>
       </table>
@@ -87,10 +89,7 @@
  <footer id="footer">
     <div class="container">
       <div class="copyright">
-        &copy; Copyright <strong><span>Gp</span></strong>. All Rights Reserved
-      </div>
-      <div class="credits">
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        &copy; Copyright. All Rights Reserved
       </div>
     </div>
   </footer><!-- End Footer -->
@@ -138,15 +137,15 @@
         var length= res.length
         var index=length-1;
         var confirmed=document.getElementById('confirmed')
-        // var recovered=document.getElementById('recovered')
+        var active=document.getElementById('active')
         var deaths=document.getElementById('deaths')
         cou.innerHTML=''
         confirmed.innerHTML=''
-        // recovered.innerHTML=''
+        active.innerHTML=''
         deaths.innerHTML=''
         cou.append(res[index].Country)
         confirmed.append(res[index].Confirmed)
-        // recovered.append(res[index].Recovered)
+        active.append(res[index].Active)
         deaths.append(res[index].Deaths)
       })
     })
